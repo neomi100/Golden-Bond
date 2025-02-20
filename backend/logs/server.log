@@ -1,0 +1,23 @@
+2025-02-20T12:42:25.062Z - INFO - Req from: bngtrff 
+2025-02-20T13:18:22.865Z - ERROR - Failed to login mmmmmmm | data and hash arguments required
+Error: data and hash arguments required
+    at Object.compare (/Users/Neomi/Documents/Documents - Neomis-MacBook-Air/Work/Develop/golden-bond/backend/node_modules/bcrypt/bcrypt.js:208:17)
+    at /Users/Neomi/Documents/Documents - Neomis-MacBook-Air/Work/Develop/golden-bond/backend/node_modules/bcrypt/promises.js:29:12
+    at new Promise (<anonymous>)
+    at Object.module.exports.promise (/Users/Neomi/Documents/Documents - Neomis-MacBook-Air/Work/Develop/golden-bond/backend/node_modules/bcrypt/promises.js:20:12)
+    at Object.compare (/Users/Neomi/Documents/Documents - Neomis-MacBook-Air/Work/Develop/golden-bond/backend/node_modules/bcrypt/bcrypt.js:204:25)
+    at /Users/Neomi/Documents/Documents - Neomis-MacBook-Air/Work/Develop/golden-bond/backend/src/api/authentication/authService.ts:12:32
+    at Generator.next (<anonymous>)
+    at fulfilled (/Users/Neomi/Documents/Documents - Neomis-MacBook-Air/Work/Develop/golden-bond/backend/src/api/authentication/authService.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) 
+2025-02-20T13:18:22.865Z - ERROR - Login error: | data and hash arguments required
+Error: data and hash arguments required
+    at Object.compare (/Users/Neomi/Documents/Documents - Neomis-MacBook-Air/Work/Develop/golden-bond/backend/node_modules/bcrypt/bcrypt.js:208:17)
+    at /Users/Neomi/Documents/Documents - Neomis-MacBook-Air/Work/Develop/golden-bond/backend/node_modules/bcrypt/promises.js:29:12
+    at new Promise (<anonymous>)
+    at Object.module.exports.promise (/Users/Neomi/Documents/Documents - Neomis-MacBook-Air/Work/Develop/golden-bond/backend/node_modules/bcrypt/promises.js:20:12)
+    at Object.compare (/Users/Neomi/Documents/Documents - Neomis-MacBook-Air/Work/Develop/golden-bond/backend/node_modules/bcrypt/bcrypt.js:204:25)
+    at /Users/Neomi/Documents/Documents - Neomis-MacBook-Air/Work/Develop/golden-bond/backend/src/api/authentication/authService.ts:12:32
+    at Generator.next (<anonymous>)
+    at fulfilled (/Users/Neomi/Documents/Documents - Neomis-MacBook-Air/Work/Develop/golden-bond/backend/src/api/authentication/authService.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) 
