@@ -29,7 +29,7 @@ import UserModel from './userModel'
 export const getByUsername = async (username: string): Promise<User | null> => {
   try {
     const user = await UserModel.findOne<User>({ username }).lean();
-    // For login the user back with the password
+  //  // For the login the user back with the password
     return user;
   } catch (error) {
     logger.error(`User not found ${username}`, error);
