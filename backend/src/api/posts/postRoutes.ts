@@ -6,6 +6,6 @@ import postController from './postController';
 const router: Router = express.Router();
 
 router.post('/create', log, requireAuth, postController.createPost);
-// router.post('/signup', log, requireAuth, postController.editPost);
+router.put('/edit/:postId', log, requireAuth, postController.editPost);
 
 export default router;
