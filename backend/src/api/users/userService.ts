@@ -1,36 +1,61 @@
-// import User from "./userModel";
-import { ObjectId } from 'mongodb';
-import dbService from '../../services/db.service';
 import logger from '../../services/logger.service';
 import { User } from '../../../../types/userType';
 import UserModel from './userModel'
+import { Types } from 'mongoose';
 
-
-// export const getById = async (userId: string): Promise<Omit<User, 'password'> | null> => {
-//   try {
-//     const collection = await dbService.getCollection('users');
-//     const user = await collection.findOne<User>({ _id: new ObjectId(userId) });
-
-//     if (!user) return null;
-
-//     // Remove password before returning
-//     const { password: _, ...userWithoutPassword } = user;
-
-//     return userWithoutPassword;
-//   } catch (error) {
-//     logger.error(`User not found ${userId}`, error);
-//     throw error;
-//   }
-// };
-
-// const collection = await dbService.getCollection(users);
-
-
-export const getByUsername = async (username: string): Promise<User | null> => {
+async function query(): Promise<User[]> {
   try {
-    const user = await UserModel.findOne<User>({ username }).lean();
-  //  // For the login the user back with the password
-    return user;
+    return await UserModel.find().exec();
+  } catch (error) {
+    logger.error('No users found', error);
+    throw error;
+  }
+}
+
+async function addFriend(userId: Types.ObjectId, friendId: Types.ObjectId): Promise<User> {
+  try {
+    const objectId = new Types.ObjectId(userId);
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      objectId,
+      { $push: { myFriends: friendId } },
+      { new: true }
+    ).select('-password');
+    if (!updatedUser) throw new Error(`User with ID ${userId} not found`);
+    return updatedUser.toObject();
+  } catch (error) {
+    logger.error(`Failed to add friend ${friendId}`, error);
+    throw error;
+  }
+}
+
+async function getYourFriends(userId: Types.ObjectId) {
+  try {
+    const user = await UserModel.findById(userId).select('-password').exec();
+    if (!user || !user.myFriends || user.myFriends.length === 0) {
+      throw new Error("User not found or has no friends");
+    }
+    return await UserModel.find({ _id: { $in: user.myFriends } }).lean();
+  } catch (error) {
+    logger.error(`Failed to get friends:`, error);
+    throw error;
+  }
+};
+
+async function getById(userId: Types.ObjectId): Promise<User | null> {
+  try {
+    const user = await UserModel.findById(userId).select('-password').exec();
+    return user ? user : null;
+  } catch (error) {
+    logger.error(`User not found ${userId}`, error);
+    throw error;
+  }
+};
+
+
+async function getByUsername(username: string): Promise<User | null> {
+  try {
+    //  // For the login the user back with the password
+    return await UserModel.findOne<User>({ username }).lean();
   } catch (error) {
     logger.error(`User not found ${username}`, error);
     throw error;
@@ -55,26 +80,13 @@ async function addUser(user: User): Promise<User> {
 }
 
 
-// const createUser = async (name: string, email: string, password: string) => {
-//     try {
-//         const user = new User({
-//           name: "Neomi Goldberg",
-//           email: "neomi@example.com",
-//           password: "hashedpassword123",
-//         });
-//         await user.save();
-//         console.log("✅ User added to database!");
-//       } catch (error) {
-//         console.error("❌ Error creating user:", error);
-//       }
-// //   return await User.create({ name, email, password });
-// };
-
-
-
 const userService = {
   getByUsername,
-  addUser
+  addUser,
+  query,
+  addFriend,
+  getById,
+  getYourFriends
 };
 
 export default userService; 

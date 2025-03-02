@@ -6,6 +6,7 @@ import MongoStore from 'connect-mongo';
 import mongoose from "mongoose";
 import authRoutes from './api/authentication/authRoutes'
 import postRoutes from './api/posts/postRoutes'
+import userRoutes from './api/users/userRoutes'
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/post', postRoutes);
+app.use('/user', userRoutes);
 
 
 app.get("/", (req, res) => {
